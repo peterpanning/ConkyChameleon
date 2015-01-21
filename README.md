@@ -11,7 +11,7 @@ To use this script:
 3. Change the ownership of the file to your user: chown you:you /path/to/conkyChameleon/script.
 4. Create a cron job for it.  crontab -e will allow you to edit your crontab, which is the file that determines when cron jobs run--we're going to use it to set conkyChameleon to run in the background once a minute. Add SHELL=/bin/bash and PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/path/to/conkyChameleon at the beginning of the file. Then add * * * * * /path/to/conkyChameleon and @reboot /path/to/conkyChameleon to the end of the file. Make sure that the file has a newline at the end or it won't run(just a crontab idiosyncracy). 
 5. Directly edit your .conkyrc: Comment out own_window_transparent and uncomment own_window_argb_visual and own_window_argb_value.  Set your argb value to something between 0 and 255, 0 for transparent and 255 for opaque. I use 80 and it works fine. Create a new window specification called own_window_colour and set it to 000000.  conkyChameleon will overwrite this field when it updates your Conky's window color.
-6.  
+6.  Enjoy!
 
 
 In future versions I will update the script so that parts of this setup are done automatically.  I may also update it so that it is a modificatino to a .conkyrc.  We'll see.
