@@ -1,5 +1,6 @@
 #!/bin/bash
-
+#Since we're almost always reducing the color, just make that the default. 
+#Figure out the best, easiest way to edit this once and push it to everywhere.
 #Send the display to cron job.
 export DISPLAY=:0
 
