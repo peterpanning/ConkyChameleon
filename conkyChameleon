@@ -25,7 +25,7 @@ while [ "$count" -lt 20 ]
 		bdec=$(echo $desktop_background | cut -f3 -d,)		
 		#Check the overall brightness of the color. If it's too bright, 
 		#set a darker color for conky's window.
-		if [[ "$rdec + $gdec + $bdec" -ge 450 ]]; then
+		if [[ "$rdec + $gdec + $bdec" -ge 50 ]]; then
 			rdec=$"$rdec/2"
 			gdec=$"$gdec/2"
 			bdec=$"$bdec/2"
