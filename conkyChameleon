@@ -1,0 +1,67 @@
+#!/bin/bash
+
+#Send the display to cron job.
+export DISPLAY=:0
+
+#Create a counter to loop the script
+count=0
+#Since we're running this as a cron job every minute, the amount of 
+#time we sleep multiplied by the number of times we loop should equal 
+#60.
+while [ "$count" -lt 20 ] 
+	do
+	#Check that the desktop environment has started, else the colors 
+	#get set to an empty value and bug out. Assumes x is the window 
+	#manager, currently none others work.
+	if [ -n "$(xprop -root | grep _GNOME_BACKGROUND_REPRESENTATIVE_COLORS | sed "s/[^0-9,]//g")" ]; 
+	then
+		#Create a variable for conky's window color
+		conky_color=$(grep own_window_colour $HOME/.conkyrc | cut -f2 -d" " )		
+		#Create a variable for current background color
+		desktop_background=$(xprop -root | grep _GNOME_BACKGROUND_REPRESENTATIVE_COLORS | sed "s/[^0-9,]//g")		
+		#Get the invidual rgb values of the current background colors.
+		rdec=$(echo $desktop_background | cut -f1 -d,)
+		gdec=$(echo $desktop_background | cut -f2 -d,)
+		bdec=$(echo $desktop_background | cut -f3 -d,)		
+		#Check the overall brightness of the color. If it's too bright, 
+		#set a darker color for conky's window.
+		if [[ "$rdec + $gdec + $bdec" -ge 50 ]]; then
+			rdec=$"$rdec/2"
+			gdec=$"$gdec/2"
+			bdec=$"$bdec/2"
+		fi	
+		#Convert rgb values to hexadecimal.
+		rhex=$(echo "ibase=10; obase=16; $rdec" | bc)
+		ghex=$(echo "ibase=10; obase=16; $gdec" | bc)
+		bhex=$(echo "ibase=10; obase=16; $bdec" | bc) 	
+		#Make sure those hexadecimal values have length of 2,
+		#so we end up with a proper hex color.
+		if [ "${#rhex}" -eq "1" ]; then
+			rhex=0$rhex
+		fi
+		if [ "${#ghex}" -eq "1" ]; then
+			ghex=0$ghex
+		fi
+		if [ "${#bhex}" -eq "1" ]; then
+			bhex=0$bhex
+		fi		
+		#Concatenate above hex values into one color code for the current
+		#desktop background.
+		desktop_background_hex=$rhex$ghex$bhex
+		
+		#If conky's window color doesn't match the background, update it. 
+		if [ "$conky_color" != "$desktop_background_hex" ]; then
+			sed -i "s/"$conky_color"/"$desktop_background_hex"/g" $HOME/.conkyrc
+		fi	
+		#Increment the counter and sleep--the script will run again in a 
+		#couple of seconds. Especially helpful for cases when conky 
+		#changes colors during a transition between desktops.
+		((count++))
+		sleep 3;
+	#Else for the case where the desktop background hasn't been created
+	#yet. 
+	else
+		((count++))
+		sleep 3
+	fi
+done
