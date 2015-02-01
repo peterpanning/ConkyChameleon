@@ -14,7 +14,7 @@ To use this script:
 6.  Enjoy!
 
 
-In future versions I will update the script so that parts of this setup are done automatically.  I may also update it so that it is a modificatino to a .conkyrc.  We'll see.
+In future versions I will update the script so that parts of this setup are done automatically.  I may also update it so that it is a modification to a .conkyrc.  We'll see.
 
 
 
