@@ -1,5 +1,8 @@
 #!/bin/bash
-
+#TODO: Since we're almost always reducing the color, just make that the default. 
+#TODO: Reducing the color brightness by half seems excessive, try 2/3. 
+#TODO: Adjust the ~/.conkyrc as necessary before running the fancy parts of the script i.e. create own_window_colour.
+#Figure out the best, easiest way to edit this once and push it to everywhere.
 #Send the display to cron job.
 export DISPLAY=:0
 
