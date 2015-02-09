@@ -30,9 +30,9 @@ while [ "$count" -lt 20 ]
 		#Check the overall brightness of the color. If it's too bright, 
 		#set a darker color for conky's window.
 		if [[ "$rdec + $gdec + $bdec" -ge 50 ]]; then
-			rdec=$"$rdec*(3/2)"
-			gdec=$"$gdec*(3/2)"
-			bdec=$"$bdec*(3/2)"
+			rdec=$"$rdec*(2/3)"
+			gdec=$"$gdec*(2/3)"
+			bdec=$"$bdec*(2/3)"
 		fi	
 		#Convert rgb values to hexadecimal.
 		rhex=$(echo "ibase=10; obase=16; $rdec" | bc)
