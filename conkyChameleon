@@ -14,7 +14,7 @@ count=0
 #Since we're running this as a cron job every minute, the amount of 
 #time we sleep multiplied by the number of times we loop should equal 
 #60.
-while [ "$count" -lt 20 ] 
+while [ "$count" -lt 12 ] 
 	do
 	#Check that the desktop environment has started, else the colors 
 	#get set to an empty value and bug out. Assumes x is the window 
@@ -31,13 +31,12 @@ while [ "$count" -lt 20 ]
 		bdec=$(echo $desktop_background | cut -f3 -d,)		
 		#Check the overall brightness of the color. If it's too bright, 
 		#set a darker color for conky's window.
-		let "aggregate = $rdec + $gdec + $bdec" 
-		#if [ "$rdec + $gdec + $bdec" -ge 500 ]; 
-		if [ "$aggregate" -ge 500 ];
+		let "aggregate = $rdec + $gdec + $bdec"
+		if [ "$aggregate" -ge 150 ];
 		then
-			rdec=$(echo $(($rdec*(1/2))))
-			gdec=$(echo $(($gdec*(1/2))))
-			bdec=$(echo $(($bdec*(1/2))))
+			let "rdec = $rdec * 1/2"
+			let "gdec = $gdec * 1/2"
+			let "bdec = $bdec * 1/2"
 		fi	
 		#Convert rgb values to hexadecimal.
 		rhex=$(echo "ibase=10; obase=16; $rdec" | bc)
@@ -66,11 +65,11 @@ while [ "$count" -lt 20 ]
 		#couple of seconds. Especially helpful for cases when conky 
 		#changes colors during a transition between desktops.
 		((count++))
-		sleep 3;
+		sleep 5;
 	#Else for the case where the desktop background hasn't been created
 	#yet. 
 	else
 		((count++))
-		sleep 3
+		sleep 5 
 	fi
 done
