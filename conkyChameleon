@@ -31,10 +31,13 @@ while [ "$count" -lt 20 ]
 		bdec=$(echo $desktop_background | cut -f3 -d,)		
 		#Check the overall brightness of the color. If it's too bright, 
 		#set a darker color for conky's window.
-		if [[ "$rdec + $gdec + $bdec" -ge 50 ]]; then
-			rdec=$(echo $(($rdec*(2/3))))
-			gdec=$(echo $(($gdec*(2/3))))
-			bdec=$(echo $(($bdec*(2/3))))
+		let "aggregate = $rdec + $gdec + $bdec" 
+		#if [ "$rdec + $gdec + $bdec" -ge 500 ]; 
+		if [ "$aggregate" -ge 500 ];
+		then
+			rdec=$(echo $(($rdec*(1/2))))
+			gdec=$(echo $(($gdec*(1/2))))
+			bdec=$(echo $(($bdec*(1/2))))
 		fi	
 		#Convert rgb values to hexadecimal.
 		rhex=$(echo "ibase=10; obase=16; $rdec" | bc)
