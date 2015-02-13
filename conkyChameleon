@@ -2,7 +2,9 @@
 #TODO: Reducing the color brightness by half seems excessive, try 2/3. 
 #TODO: Create a second, onetime setup script. This script will check the user's .conkyrc file
 #for necessary variables, set them to the appropriate options, and maybe create a cron job for
-#conkyChameleon. 
+#conkyChameleon.
+#TODO: If the wallpaper is super dark, Unity actually creates a lighter launcher color, which is 
+#really clever.  
 
 #Send the display to cron job.
 export DISPLAY=:0
@@ -30,9 +32,9 @@ while [ "$count" -lt 20 ]
 		#Check the overall brightness of the color. If it's too bright, 
 		#set a darker color for conky's window.
 		if [[ "$rdec + $gdec + $bdec" -ge 50 ]]; then
-			rdec=$(echo $(($rdec*(1/2))))
-			gdec=$(echo $(($gdec*(1/2))))
-			bdec=$(echo $(($bdec*(1/2))))
+			rdec=$(echo $(($rdec*(2/3))))
+			gdec=$(echo $(($gdec*(2/3))))
+			bdec=$(echo $(($bdec*(2/3))))
 		fi	
 		#Convert rgb values to hexadecimal.
 		rhex=$(echo "ibase=10; obase=16; $rdec" | bc)
