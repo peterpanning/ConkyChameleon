@@ -5,6 +5,8 @@
 #conkyChameleon.
 #TODO: If the wallpaper is super dark, Unity actually creates a lighter launcher color, which is 
 #really clever.  
+#TODO: Would it be possible to directly edit the colors of the images used by conky-assets? If so, we wouldn't have to manipulate own_window_colour
+#and would have a perfectly sized chameleonic conky. 
 
 #Send the display to cron job.
 export DISPLAY=:0
@@ -34,9 +36,9 @@ while [ "$count" -lt 12 ]
 		let "aggregate = $rdec + $gdec + $bdec"
 		if [ "$aggregate" -ge 150 ];
 		then
-			let "rdec = $rdec * 1/2"
-			let "gdec = $gdec * 1/2"
-			let "bdec = $bdec * 1/2"
+			let "rdec = $rdec * 2/3"
+			let "gdec = $gdec * 2/3"
+			let "bdec = $bdec * 2/3"
 		fi	
 		#Convert rgb values to hexadecimal.
 		rhex=$(echo "ibase=10; obase=16; $rdec" | bc)
